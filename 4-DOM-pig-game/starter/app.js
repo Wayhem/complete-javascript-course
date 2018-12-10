@@ -8,3 +8,43 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
+
+var puntajes, puntajeRonda, jugadorAct, dado;
+
+puntajes = [0,0];
+puntajeRonda = 0;
+jugadorAct = 0;
+
+// dado = Math.floor(Math.random() * 6) + 1;
+// // console.log(dado);
+
+// document.querySelector('#current-'+jugadorAct).textContent = dado;
+// //document.querySelector('#current-'+jugadorAct).innerHTML = '<em>' +dado+'</em>';
+
+puntajes[0] = document.querySelector('#score-0').textContent;
+
+document.querySelector('.dice').style.display = 'none';
+
+document.getElementById('score-0').textContent = '0';
+document.getElementById('score-1').textContent = '0';
+document.getElementById('current-0').textContent = '0';
+document.getElementById('current-1').textContent = '0';
+
+
+document.querySelector('.btn-roll').addEventListener('click', function(){
+    var dado = Math.floor(Math.random() * 6) + 1;
+    var diceDOM = document.querySelector('.dice');
+    diceDOM.style.display = 'block';
+    diceDOM.src = 'dice-' + dado + '.png';
+    if (dado !== 1) {
+        puntajeRonda += dado;
+        document.querySelector('#current-'+jugadorAct).textContent = puntajeRonda;
+    } else {
+        document.querySelector('#current-'+jugadorAct).textContent = '0';
+        document.querySelector('.player-' +jugadorAct+'-panel').classList.remove('active');
+        jugadorAct === 0 ? jugadorAct = 1 : jugadorAct = 0;
+        puntajeRonda = 0;
+        document.querySelector('.player-' +jugadorAct+'-panel').classList.add('active');
+        document.querySelector('.dice').style.display = 'none';
+    }
+});
