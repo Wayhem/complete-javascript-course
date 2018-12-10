@@ -40,11 +40,31 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
         puntajeRonda += dado;
         document.querySelector('#current-'+jugadorAct).textContent = puntajeRonda;
     } else {
-        document.querySelector('#current-'+jugadorAct).textContent = '0';
-        document.querySelector('.player-' +jugadorAct+'-panel').classList.remove('active');
-        jugadorAct === 0 ? jugadorAct = 1 : jugadorAct = 0;
-        puntajeRonda = 0;
-        document.querySelector('.player-' +jugadorAct+'-panel').classList.add('active');
-        document.querySelector('.dice').style.display = 'none';
+        nextPlayer();
     }
 });
+
+document.querySelector('.btn-hold').addEventListener('click', function(){
+    if (puntajeRonda) {
+        puntajes[jugadorAct] += puntajeRonda;
+        document.querySelector('#score-'+jugadorAct).textContent = puntajes[jugadorAct];
+        if (puntajes[jugadorAct] >= 100) {
+            document.querySelector('#name-' + jugadorAct).textContent = 'WINNER!';
+            document.querySelector('.dice').style.display = 'none';
+            document.querySelector('.player-' + jugadorAct + '-panel').classList.add('winner');
+            document.querySelector('.player-' + jugadorAct + '-panel').classList.remove('active');
+        } else {
+            nextPlayer();
+        }
+    }
+});
+
+function nextPlayer() {
+    jugadorAct === 0 ? jugadorAct = 1 : jugadorAct = 0;
+    puntajeRonda = 0;
+    document.querySelector('#current-0').textContent = '0';
+    document.querySelector('#current-1').textContent = '0';
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
+    document.querySelector('.dice').style.display = 'none';
+}
