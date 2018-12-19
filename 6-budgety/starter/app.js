@@ -57,7 +57,8 @@ var UIController = (function(){
         inputValue: '.add__value',
         inputButton: '.add__btn',
         expenseList: '.expenses__list',
-        incomeList: '.income__list'
+        incomeList: '.income__list',
+        budgetDisplay: '.budget__value'
     }
     return {
         getInput: function(){
@@ -85,6 +86,10 @@ var UIController = (function(){
             element.insertAdjacentHTML('beforeend', newHtml);
         },
 
+        displayBudget: function(bud){
+            document.querySelector(DOMstrings.budgetDisplay).textContent = bud;
+        },
+
         getDOMstrings: function() {
             return DOMstrings;
         }
@@ -104,7 +109,7 @@ const controller = (function(budgetCtrl, UICtrl){
     };
 
     var ctrlAddItem = function () {
-        var input, newItem;
+        var input, newItem, budget;
         //get input
         input = UICtrl.getInput();
         //add input to budgetcontroller (data)
@@ -112,8 +117,10 @@ const controller = (function(budgetCtrl, UICtrl){
         //add item to UIcontroller (ui)
         UICtrl.addListItem(newItem, input.type);
         //calculate budget
-        console.log(budgetController.calcBudget());
+        budget = budgetController.calcBudget();
         //display budget on ui
+        UICtrl.displayBudget(budget);
+
     };
 
     return {
