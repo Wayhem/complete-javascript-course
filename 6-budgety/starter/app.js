@@ -40,7 +40,11 @@ var budgetController = (function(){
             }
 
             data.allItems[type].push(newItem);
+            data.totals[type] += parseFloat(val);
             return newItem;
+        },
+        calcBudget: function() {
+            return data.totals.inc - data.totals.exp;
         }
     }
 
@@ -108,6 +112,7 @@ const controller = (function(budgetCtrl, UICtrl){
         //add item to UIcontroller (ui)
         UICtrl.addListItem(newItem, input.type);
         //calculate budget
+        console.log(budgetController.calcBudget());
         //display budget on ui
     };
 
