@@ -40,7 +40,7 @@ var budgetController = (function(){
             }
 
             data.allItems[type].push(newItem);
-            data.totals[type] += parseFloat(val);
+            data.totals[type] += val;
             return newItem;
         },
         calcBudget: function() {
@@ -65,7 +65,7 @@ var UIController = (function(){
             return {
                 type: document.querySelector(DOMstrings.inputType).value, //inc or exp
                 description: document.querySelector(DOMstrings.inputDescription).value,
-                value: document.querySelector(DOMstrings.inputValue).value
+                value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
             };
         },
 
@@ -84,6 +84,20 @@ var UIController = (function(){
             newHtml = newHtml.replace('%value%', obj.amount);            
             
             element.insertAdjacentHTML('beforeend', newHtml);
+        },
+
+        clearFields: function () {
+            var fields, fieldsArr;
+
+            fields = document.querySelectorAll(DOMstrings.inputDescription+', '+DOMstrings.inputValue);
+            
+            fieldsArr = Array.prototype.slice.call(fields);
+            
+            fieldsArr.forEach(function(field){
+                field.value = '';
+            });
+
+            fieldsArr[0].focus();
         },
 
         displayBudget: function(bud){
@@ -108,19 +122,28 @@ const controller = (function(budgetCtrl, UICtrl){
         });
     };
 
-    var ctrlAddItem = function () {
-        var input, newItem, budget;
-        //get input
-        input = UICtrl.getInput();
-        //add input to budgetcontroller (data)
-        newItem = budgetController.addItem(input.type, input.description, input.value);
-        //add item to UIcontroller (ui)
-        UICtrl.addListItem(newItem, input.type);
+    var updateBudget = function () {
+        var budget;
         //calculate budget
         budget = budgetController.calcBudget();
         //display budget on ui
         UICtrl.displayBudget(budget);
+    };
 
+    var ctrlAddItem = function () {
+        var input, newItem;
+        //get input
+        input = UICtrl.getInput();
+        if (input.description !== '' && !isNaN(input.value) && input.value > 0){
+            //add input to budgetcontroller (data)
+            newItem = budgetController.addItem(input.type, input.description, input.value);
+            //add item to UIcontroller (ui)
+            UICtrl.addListItem(newItem, input.type);
+            //clear fields
+            UICtrl.clearFields();
+            //update budget
+            updateBudget();
+        }
     };
 
     return {
