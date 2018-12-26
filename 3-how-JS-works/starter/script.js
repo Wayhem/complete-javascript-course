@@ -8,9 +8,13 @@
 
 
 
+function nigger() {
+    var c = 3;
+};
 
+nigger();
 
-
+console.log(c);
 
 
 
