@@ -9,7 +9,41 @@
 <body>
     <h1>Asynchronous JavaScript</h1>
     <script>
+        // const second = () => {
+        //     setTimeout(() => console.log('async second'), 2000);
+        // }
+
+        // const first = () => {
+        //     console.log('hello hello');
+        //     second();
+        //     console.log('end');
+        // }
+
+        // first();
         
+        function getRecipe() {
+            setTimeout(()=>{
+                const recipeID = [1,2,3,4];
+                console.log(recipeID);
+
+                setTimeout((id)=>{
+                    const recipe = {
+                        title:"Fresh pasta",
+                        publisher:"italian man who went to malta"
+                    }
+                    console.log(`${id}: ${recipe.title}`);
+                    setTimeout(pub => {
+                        const recipe = {
+                        title:"Italian octopus",
+                        publisher:"italian man who went to malta"
+                    }
+                        console.log(recipe);
+                    }, 2000, recipe.publisher)
+                },2000, recipeID[3])
+            },2000)
+        }
+        getRecipe();
+
     </script>
 </body>
 </html>
