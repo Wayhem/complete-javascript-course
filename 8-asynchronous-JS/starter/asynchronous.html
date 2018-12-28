@@ -21,29 +21,44 @@
 
         // first();
         
-        function getRecipe() {
+        // function getRecipe() {
+        //     setTimeout(()=>{
+        //         const recipeID = [1,2,3,4];
+        //         console.log(recipeID);
+
+        //         setTimeout((id)=>{
+        //             const recipe = {
+        //                 title:"Fresh pasta",
+        //                 publisher:"italian man who went to malta"
+        //             }
+        //             console.log(`${id}: ${recipe.title}`);
+        //             setTimeout(pub => {
+        //                 const recipe = {
+        //                 title:"Italian octopus",
+        //                 publisher:"italian man who went to malta"
+        //             }
+        //                 console.log(recipe);
+        //             }, 2000, recipe.publisher)
+        //         },2000, recipeID[3])
+        //     },2000)
+        // }
+        // getRecipe();
+        const getIDs = new Promise((resolve, reject)=>{
             setTimeout(()=>{
-                const recipeID = [1,2,3,4];
-                console.log(recipeID);
+                resolve([1,2,3,4]);
+            }, 2000)
+            setTimeout(()=>{
+                reject('there was an error');
+            }, 4000)
+        });
 
-                setTimeout((id)=>{
-                    const recipe = {
-                        title:"Fresh pasta",
-                        publisher:"italian man who went to malta"
-                    }
-                    console.log(`${id}: ${recipe.title}`);
-                    setTimeout(pub => {
-                        const recipe = {
-                        title:"Italian octopus",
-                        publisher:"italian man who went to malta"
-                    }
-                        console.log(recipe);
-                    }, 2000, recipe.publisher)
-                },2000, recipeID[3])
-            },2000)
-        }
-        getRecipe();
-
+        getIDs
+        .then(IDs => {
+            console.log(IDs);
+        })
+        .catch(error => {
+            console.log(error);
+        });
     </script>
 </body>
 </html>
